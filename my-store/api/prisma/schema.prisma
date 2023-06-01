@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Store {
+  id         String    @id @default(uuid())
+  name       String
+  email      String    @unique
+  password   String
+  address    String
+  city       String
+  state      String
+  zipCode    String
+  phone      String
+  products   Product[]
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  supplierId String?
+  users      User[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  @@map("stores")
+}
+
+model Product {
+  id            String    @id @default(uuid())
+  name          String
+  description   String
+  sellPrice     Float
+  purchasePrice Float
+  quantity      Int
+  categoryId    String
+  storeId       String
+  category      Category  @relation(fields: [categoryId], references: [id])
+  store         Store     @relation(fields: [storeId], references: [id])
+  supplier      Supplier? @relation(fields: [supplierId], references: [id])
+  supplierId    String?
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @updatedAt
+
+  @@map("products")
+}
+
+model Category {
+  id         String    @id @default(uuid())
+  name       String
+  products   Product[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  @@map("categories")
+}
+
+model Supplier {
+  id         String    @id @default(uuid())
+  name       String
+  address    String
+  city       String
+  state      String
+  zipCode    String
+  phone      String
+  products   Product[]
+  stores     Store[]
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+
+  @@map("suppliers")
+}
+
+model User {
+  id          String       @id @default(uuid())
+  username    String       @unique
+  password    String
+  roles       Role[]
+  permissions Permission[]
+  store       Store        @relation(fields: [storeId], references: [id])
+  storeId     String
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+}
+
+model Role {
+  id          String       @id @default(uuid())
+  name        String
+  users       User[]
+  permissions Permission[]
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+}
+
+model Permission {
+  id         String   @id @default(uuid())
+  name       String
+  roles      Role[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  User       User?    @relation(fields: [userId], references: [id])
+  userId     String?
+}

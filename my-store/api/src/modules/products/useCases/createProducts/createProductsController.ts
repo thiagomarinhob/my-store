@@ -10,8 +10,9 @@ export class CreateProductsController {
       purchasePrice,
       quantity,
       categoryId,
-      storeId,
     } = request.body;
+
+    const storeId = request.id_store;
 
     const createProductUseCase = new CreateProductsUseCase();
     const result = await createProductUseCase.execute({

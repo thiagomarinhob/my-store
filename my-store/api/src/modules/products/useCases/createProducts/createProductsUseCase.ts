@@ -19,6 +19,7 @@ export class CreateProductsUseCase {
     purchasePrice,
     quantity,
     categoryId,
+    storeId,
   }: ICreateProduct) {
     const existCategory = await prisma.category.findFirst({
       where: {
@@ -46,7 +47,7 @@ export class CreateProductsUseCase {
         purchasePrice,
         quantity,
         categoryId,
-        storeId: request.id_store,
+        storeId,
       },
     });
 

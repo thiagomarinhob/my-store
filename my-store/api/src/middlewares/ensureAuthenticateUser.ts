@@ -24,12 +24,13 @@ export async function ensureAuthenticateUser(
   try {
     const { sub } = verify(token, String(process.env.SECRET_PASS)) as IPayload;
 
-    request.id_store = sub;
+    request.id_user = sub;
 
     return next();
   } catch (err) {
     return response.status(401).json({
       message: "Invalid token!",
+      code: "token.expired",
     });
   }
 }

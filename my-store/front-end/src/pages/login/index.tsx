@@ -19,7 +19,8 @@ import { withSSRGuest } from "@/utils/withSSRGuest";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isError, setIsError] = useState(false);
+  const [isErrorEmail, setIsErrorEmail] = useState(false);
+  const [isErrorPassword, setIsErrorPassword] = useState(false);
   const { signIn } = useContext(AuthContext);
 
   const Router = useRouter();
@@ -48,8 +49,8 @@ export default function Login() {
             placeholder="Digite seu email"
             value={email}
             mask=""
-            isErrorState={isError}
-            setErrorState={setIsError}
+            isErrorState={isErrorEmail}
+            setErrorState={setIsErrorEmail}
           />
 
           <Input
@@ -62,8 +63,8 @@ export default function Login() {
             placeholder="Digite sua senha"
             value={password}
             mask=""
-            isErrorState={isError}
-            setErrorState={setIsError}
+            isErrorState={isErrorPassword}
+            setErrorState={setIsErrorPassword}
           />
 
           <Button onClick={handleSunmit}>Login</Button>

@@ -10,9 +10,9 @@ export class CreateProductsController {
       purchasePrice,
       quantity,
       categoryId,
+      storeId,
+      supplierId,
     } = request.body;
-
-    const storeId = request.id_store;
 
     const createProductUseCase = new CreateProductsUseCase();
     const result = await createProductUseCase.execute({
@@ -23,6 +23,7 @@ export class CreateProductsController {
       quantity,
       categoryId,
       storeId,
+      supplierId,
     });
 
     return response.json(result);

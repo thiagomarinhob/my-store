@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { ensureAuthenticateUser } from "./middlewares/ensureAuthenticateUser";
-import { AuthenticateStoresController } from "./modules/account/authenticateStore/AuthenticateStoresController";
+import { AuthenticateUsersController } from "./modules/account/authenticateUser/authenticateUsersController";
 import { CreateCategoriesController } from "./modules/categories/useCases/createCategories/createCategoriesController";
 import { FindAllCategoriesController } from "./modules/categories/useCases/findAllCategories/findAllCategoriesController";
 import { FindByIdCategoriesController } from "./modules/categories/useCases/findByIdCategories/findByIdCategoriesController";
@@ -10,10 +10,12 @@ import { FindAllSupplierController } from "./modules/supplier/useCases/findAllSu
 import { CreateProductsController } from "./modules/products/useCases/createProducts/createProductsController";
 import { UpdateProductsController } from "./modules/products/useCases/updateProducts/updateProductsController";
 import { FindAllProductsController } from "./modules/products/useCases/findAllProducts/findAllProductsController";
+import { RefreshTokenController } from "./modules/account/refreshToken/refreshTokenController";
+import { CreateUsersController } from "./modules/users/useCases/createUsers/createUsersController";
 
 const routes = Router();
 
-const authenticateClientController = new AuthenticateStoresController();
+const authenticateUserController = new AuthenticateUsersController();
 const createCategoriesController = new CreateCategoriesController();
 const findAllCategoriesController = new FindAllCategoriesController();
 const findByIdCategoriesController = new FindByIdCategoriesController();
@@ -23,10 +25,16 @@ const findAllSupplierController = new FindAllSupplierController();
 const createProductsController = new CreateProductsController();
 const updateProductsController = new UpdateProductsController();
 const findAllProductsController = new FindAllProductsController();
+const refreshTokenController = new RefreshTokenController();
+const createUsersController = new CreateUsersController();
 
-routes.post("/authenticate", authenticateClientController.handle);
+routes.post("/authenticate", authenticateUserController.handle);
+
+routes.post("/refresh-token", refreshTokenController.handle);
 
 routes.post("/stores", createStoreController.handle);
+
+routes.post("/users", createUsersController.handle);
 
 routes.post(
   "/products",

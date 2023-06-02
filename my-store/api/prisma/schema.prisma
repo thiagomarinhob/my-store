@@ -14,7 +14,6 @@ model Store {
   id         String    @id @default(uuid())
   name       String
   email      String    @unique
-  password   String
   address    String
   city       String
   state      String
@@ -76,15 +75,18 @@ model Supplier {
 }
 
 model User {
-  id          String       @id @default(uuid())
-  username    String       @unique
-  password    String
-  roles       Role[]
-  permissions Permission[]
-  store       Store        @relation(fields: [storeId], references: [id])
-  storeId     String
-  created_at  DateTime     @default(now())
-  updated_at  DateTime     @updatedAt
+  id           String         @id @default(uuid())
+  username     String         @unique
+  password     String
+  roles        Role[]
+  permissions  Permission[]
+  store        Store          @relation(fields: [storeId], references: [id])
+  storeId      String
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  RefreshToken RefreshToken[]
+
+  @@map("users")
 }
 
 model Role {
@@ -94,6 +96,8 @@ model Role {
   permissions Permission[]
   created_at  DateTime     @default(now())
   updated_at  DateTime     @updatedAt
+
+  @@map("roles")
 }
 
 model Permission {
@@ -104,4 +108,17 @@ model Permission {
   updated_at DateTime @updatedAt
   User       User?    @relation(fields: [userId], references: [id])
   userId     String?
+
+  @@map("permissions")
+}
+
+model RefreshToken {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  token      String
+  expiresAt  DateTime
+  created_at DateTime @default(now())
+
+  @@map("refresh-token")
 }

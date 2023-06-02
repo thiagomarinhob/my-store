@@ -22,7 +22,7 @@ const Sidebar = ({ active }: any) => {
     <Container sidebar={active}>
       <FaHome onClick={closeSidebar} />
       <Content>
-        <SidebarItem Icon={FaHome} link={"/"} Text="Home" />
+        <SidebarItem Icon={FaHome} link={"/products"} Text="Home" />
         <SidebarItem Icon={FaChartBar} link={"/products"} Text="Produtos" />
         <SidebarItem Icon={FaUserAlt} link={"/"} Text="Users" />
         <SidebarItem Icon={FaEnvelope} link={"/"} Text="Mail" />

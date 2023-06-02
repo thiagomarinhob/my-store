@@ -21,17 +21,17 @@ interface IProductList {
 }
 
 export default function Products({ products }: IProductList) {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(products);
 
-  // useEffect(() => {
-  //   async function getProducts() {
-  //     const response = await api.get("/products");
+  useEffect(() => {
+    async function getProducts() {
+      const response = await api.get("/products");
 
-  //     setList(response.data);
-  //   }
+      setList(response.data);
+    }
 
-  //   getProducts();
-  // }, []);
+    getProducts();
+  }, []);
 
   return (
     <Container>
@@ -40,7 +40,7 @@ export default function Products({ products }: IProductList) {
         <Menu></Menu>
       </HeaderMenu>
       <ContainerTable>
-        <ProductsTable productList={products} />
+        <ProductsTable productList={list} />
       </ContainerTable>
     </Container>
   );

@@ -4,11 +4,11 @@ import { setCookie, parseCookies, destroyCookie } from "nookies";
 import Router from "next/router";
 
 type User = {
-  email: string;
+  username: string;
 };
 
 type SignCredentials = {
-  email: string;
+  username: string;
   password: string;
 };
 
@@ -43,10 +43,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, []);
 
-  async function signIn({ email, password }: SignCredentials) {
+  async function signIn({ username, password }: SignCredentials) {
     try {
       const response = await api.post("/authenticate", {
-        email,
+        username,
         password,
       });
 
@@ -62,9 +62,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         path: "/",
       });
 
-      setUser({ email });
-
-      console.log(token);
+      setUser({ username });
 
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
     } catch (err) {

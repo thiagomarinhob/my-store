@@ -21,9 +21,9 @@ export function setupAPIClient(
     (response) => {
       return response;
     },
-    (error: AxiosError) => {
+    async (error: AxiosError) => {
       if (error.response?.status === 401) {
-        if (error.response.data?.message === "Invalid token!") {
+        if (error.response.data?.code === "token.expired") {
           cookies = parseCookies(ctx);
 
           const { "store.refreshToken": refreshToken } = cookies;
@@ -31,19 +31,19 @@ export function setupAPIClient(
 
           if (!isRefreshing) {
             isRefreshing = true;
-            api
-              .post("/refresh", {
+            await api
+              .post("/refresh-token", {
                 refreshToken,
               })
               .then((response) => {
-                const { token } = response.data;
+                const { token, refreshToken } = response.data;
 
                 setCookie(ctx, "store.token", token, {
                   maxAge: 60 * 60 * 24 * 30,
                   path: "/",
                 });
 
-                setCookie(ctx, "store.token", response.data.refreshToken, {
+                setCookie(ctx, "store.refreshToken", refreshToken, {
                   maxAge: 60 * 60 * 24 * 30,
                   path: "/",
                 });
@@ -76,7 +76,7 @@ export function setupAPIClient(
                 if (originalConfig)
                   originalConfig.headers["Authorization"] = `Bearer ${token}`;
 
-                resolve(api(originalConfig));
+                resolve(api(String(originalConfig)));
               },
               onFailure: (err: AxiosError) => {
                 reject(err);

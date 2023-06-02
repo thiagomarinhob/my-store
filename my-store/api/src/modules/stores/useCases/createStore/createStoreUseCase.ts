@@ -1,10 +1,8 @@
 import { prisma } from "../../../../database/prismaClient";
-import { hash } from "bcrypt";
 
 interface ICreateStore {
   name: string;
   email: string;
-  password: string;
   address: string;
   city: string;
   state: string;
@@ -16,7 +14,6 @@ export class CreateStoreUseCase {
   async execute({
     name,
     email,
-    password,
     address,
     city,
     state,
@@ -31,13 +28,10 @@ export class CreateStoreUseCase {
 
     if (existStore) throw new Error("Store already exists");
 
-    const hashPassword = await hash(password, 10);
-
     const store = await prisma.store.create({
       data: {
         name,
         email,
-        password: hashPassword,
         address,
         city,
         state,

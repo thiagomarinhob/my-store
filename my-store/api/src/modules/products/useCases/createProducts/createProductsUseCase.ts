@@ -9,6 +9,7 @@ interface ICreateProduct {
   quantity: number;
   categoryId: string;
   storeId: string;
+  supplierId: string;
 }
 
 export class CreateProductsUseCase {
@@ -20,6 +21,7 @@ export class CreateProductsUseCase {
     quantity,
     categoryId,
     storeId,
+    supplierId,
   }: ICreateProduct) {
     const existCategory = await prisma.category.findFirst({
       where: {
@@ -38,6 +40,16 @@ export class CreateProductsUseCase {
     });
 
     if (existProduct) throw new Error("Product already exists");
+
+    const existSupplier = await prisma.supplier.findFirst({
+      where: {
+        id: {
+          equals: supplierId,
+        },
+      },
+    });
+
+    if (!existSupplier) throw new Error("Supplier does not exist");
 
     const product = await prisma.product.create({
       data: {

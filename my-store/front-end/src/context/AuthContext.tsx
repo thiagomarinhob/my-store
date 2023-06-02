@@ -1,6 +1,7 @@
 import React, { createContext, ReactNode, useState, useEffect } from "react";
-import api from "@/pages/api/api";
-import { setCookie, parseCookies } from "nookies";
+import { api } from "@/pages/api/apiClient";
+import { setCookie, parseCookies, destroyCookie } from "nookies";
+import Router from "next/router";
 
 type User = {
   email: string;
@@ -21,6 +22,13 @@ type AuthProviderProps = {
 };
 
 export const AuthContext = createContext({} as AuthContextData);
+
+export function SignOut() {
+  destroyCookie(undefined, "store.token");
+  destroyCookie(undefined, "store.refreshToken");
+
+  Router.push("/");
+}
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User>();
@@ -49,12 +57,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
         path: "/",
       });
 
-      setCookie(undefined, "store.token", refreshToken, {
+      setCookie(undefined, "store.refreshToken", refreshToken, {
         maxAge: 60 * 60 * 24 * 30,
         path: "/",
       });
 
       setUser({ email });
+
+      console.log(token);
 
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
     } catch (err) {

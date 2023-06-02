@@ -7,10 +7,10 @@ export const Container = styled.section`
   width: 90rem;
   height: 100vh;
   max-width: 90rem;
-  background: ${({ theme }) => theme.colors.black};
+  background: ${({ theme }) => theme.colors.white};
 
   h1 {
-    color: ${({ theme }) => theme.colors.white};
+    color: ${({ theme }) => theme.colors.black};
     font-size: 1.75rem;
   }
 `;

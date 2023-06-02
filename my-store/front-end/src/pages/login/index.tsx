@@ -12,6 +12,9 @@ import {
 } from "../../styles/pages/login";
 import Image from "next/image";
 import Logo from "@/assets/image.jpg";
+import { GetServerSideProps } from "next";
+import { parseCookies } from "nookies";
+import { withSSRGuest } from "@/utils/withSSRGuest";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -19,10 +22,11 @@ export default function Login() {
   const [isError, setIsError] = useState(false);
   const { signIn } = useContext(AuthContext);
 
-  const router = useRouter();
+  const Router = useRouter();
 
   async function handleSunmit() {
     await signIn({ email, password });
+    Router.push("/products");
   }
 
   return (
@@ -68,3 +72,9 @@ export default function Login() {
     </Container>
   );
 }
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {},
+  };
+});

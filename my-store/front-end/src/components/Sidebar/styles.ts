@@ -7,7 +7,7 @@ interface IContainer {
 export const Container = styled.div<IContainer>`
   position: relative;
   height: 100vh;
-  background-color: ${({ theme }) => theme.colors.bluePrimary};
+  background-color: ${({ theme }) => theme.colors.grayPrimary};
   /* top: 0px; */
   /* left: 0px; */
   width: 250px;

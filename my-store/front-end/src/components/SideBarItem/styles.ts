@@ -5,7 +5,7 @@ export const Container = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.white};
   font-size: 1.25rem;
-  color: ${({ theme }) => theme.colors.blueSecundary};
+  color: ${({ theme }) => theme.colors.grayPrimary};
   padding: 0.625rem;
   cursor: pointer;
   border-radius: 0.625rem;
@@ -16,7 +16,7 @@ export const Container = styled.div`
   }
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.blueSecundary};
+    background-color: ${({ theme }) => theme.colors.graySecuundary};
     color: ${({ theme }) => theme.colors.white};
   }
 `;

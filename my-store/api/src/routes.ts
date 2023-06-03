@@ -12,6 +12,11 @@ import { UpdateProductsController } from "./modules/products/useCases/updateProd
 import { FindAllProductsController } from "./modules/products/useCases/findAllProducts/findAllProductsController";
 import { RefreshTokenController } from "./modules/account/refreshToken/refreshTokenController";
 import { CreateUsersController } from "./modules/users/useCases/createUsers/createUsersController";
+import { CreateRoleController } from "./modules/roles/useCases/createRoles/createRolesController";
+import { CreatePermissionsController } from "./modules/permissions/useCases/createPermissions/createPermissionsController";
+import { UpdateRolesController } from "./modules/roles/useCases/updateRoles/updateRolesController";
+import { FindByIdProductController } from "./modules/products/useCases/findByIdProducts/findByIdProductsController";
+import { DeleteProductsController } from "./modules/products/useCases/deleteProducts/deleteProductsController";
 
 const routes = Router();
 
@@ -27,6 +32,11 @@ const updateProductsController = new UpdateProductsController();
 const findAllProductsController = new FindAllProductsController();
 const refreshTokenController = new RefreshTokenController();
 const createUsersController = new CreateUsersController();
+const createRoleController = new CreateRoleController();
+const createPermissionsController = new CreatePermissionsController();
+const updateRolesController = new UpdateRolesController();
+const findByIdProductController = new FindByIdProductController();
+const deleteProductsController = new DeleteProductsController();
 
 routes.post("/authenticate", authenticateUserController.handle);
 
@@ -35,6 +45,23 @@ routes.post("/refresh-token", refreshTokenController.handle);
 routes.post("/stores", createStoreController.handle);
 
 routes.post("/users", createUsersController.handle);
+
+routes.post("/roles", createRoleController.handle);
+routes.post("/permissions", createPermissionsController.handle);
+
+routes.put("/roles/:id", ensureAuthenticateUser, updateRolesController.handle);
+
+routes.get(
+  "/products/:id",
+  ensureAuthenticateUser,
+  findByIdProductController.handle
+);
+
+routes.delete(
+  "/products/:id",
+  ensureAuthenticateUser,
+  deleteProductsController.handle
+);
 
 routes.post(
   "/products",

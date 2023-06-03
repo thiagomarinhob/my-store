@@ -25,9 +25,7 @@ export class CreateProductsUseCase {
   }: ICreateProduct) {
     const existCategory = await prisma.category.findFirst({
       where: {
-        id: {
-          equals: categoryId,
-        },
+        id: categoryId,
       },
     });
 
@@ -43,9 +41,7 @@ export class CreateProductsUseCase {
 
     const existSupplier = await prisma.supplier.findFirst({
       where: {
-        id: {
-          equals: supplierId,
-        },
+        id: supplierId,
       },
     });
 
@@ -60,6 +56,7 @@ export class CreateProductsUseCase {
         quantity,
         categoryId,
         storeId,
+        supplierId,
       },
     });
 

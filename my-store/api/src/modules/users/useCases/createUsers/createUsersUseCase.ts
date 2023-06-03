@@ -5,10 +5,11 @@ interface IUser {
   username: string;
   password: string;
   storeId: string;
+  roleId?: string;
 }
 
 export class CreateUserUseCase {
-  async execute({ username, password, storeId }: IUser) {
+  async execute({ username, password, storeId, roleId }: IUser) {
     const userExist = await prisma.user.findFirst({
       where: {
         username,
@@ -26,6 +27,11 @@ export class CreateUserUseCase {
         username,
         password: hashPassword,
         storeId,
+        roles: {
+          connect: {
+            id: roleId,
+          },
+        },
       },
     });
 

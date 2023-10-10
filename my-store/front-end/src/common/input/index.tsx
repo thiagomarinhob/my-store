@@ -44,7 +44,7 @@ export function Input({
 
     typeof onChange === "function" && onChange(currentValue);
 
-    if (InputType === "email") {
+    if (InputType === "text") {
       typeof setErrorState === "function" &&
         setErrorState(!validateEmailFormat(currentValue));
     } else if (mask && isRequired) {
@@ -62,9 +62,7 @@ export function Input({
 
   return (
     <Container>
-      <Label error={isErrorState} filled={value}>
-        {labelText}
-      </Label>
+      <Label filled={value}>{labelText}</Label>
       <InputMask
         type={InputType}
         onChange={(e: { target: { validity: any; value: any } }) => {
@@ -77,7 +75,7 @@ export function Input({
         name={name}
         mask={mask}
       />
-      {isErrorState && <Error error={isErrorState}>{}</Error>}
+      {isErrorState && <Error errorstate={isErrorState}>{}</Error>}
     </Container>
   );
 }

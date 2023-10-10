@@ -13,6 +13,18 @@ export class AuthenticateUsersUseCase {
       where: {
         username,
       },
+      include: {
+        roles: {
+          select: {
+            name: true,
+            permissions: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!userExist) {
@@ -46,6 +58,7 @@ export class AuthenticateUsersUseCase {
     return {
       token,
       refreshToken,
+      roles: userExist.roles,
     };
   }
 }

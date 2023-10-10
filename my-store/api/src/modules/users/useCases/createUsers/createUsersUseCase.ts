@@ -2,28 +2,30 @@ import { prisma } from "../../../../database/prismaClient";
 import { hash } from "bcrypt";
 
 interface IUser {
+  phone: string;
   username: string;
   password: string;
   storeId: string;
-  roleId?: string;
+  roleId: string;
 }
 
 export class CreateUserUseCase {
-  async execute({ username, password, storeId, roleId }: IUser) {
+  async execute({ phone, username, password, storeId, roleId }: IUser) {
     const userExist = await prisma.user.findFirst({
       where: {
-        username,
+        phone,
       },
     });
 
     if (userExist) {
-      throw new Error("Username already exist!");
+      throw new Error("phone already exist!");
     }
 
     const hashPassword = await hash(password, 10);
 
     const user = await prisma.user.create({
       data: {
+        phone,
         username,
         password: hashPassword,
         storeId,

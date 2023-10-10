@@ -2,13 +2,16 @@ import { SignOut } from "@/context/AuthContext";
 import axios, { AxiosError } from "axios";
 import { GetServerSidePropsContext } from "next";
 import { parseCookies, setCookie } from "nookies";
+import { AuthTokenError } from "../errors/AuthTokenError";
 
 let isRefreshing = false;
 let failedRequestsQueue: any = [];
 
-export function setupAPIClient(
-  ctx: GetServerSidePropsContext | undefined = undefined
-) {
+interface AxiosErrorResponse {
+  code?: string;
+}
+
+export function setupAPIClient(ctx: GetServerSidePropsContext | undefined) {
   let cookies = parseCookies(ctx);
   const api = axios.create({
     baseURL: "http://localhost:3000",
@@ -21,7 +24,7 @@ export function setupAPIClient(
     (response) => {
       return response;
     },
-    async (error: AxiosError) => {
+    (error: AxiosError<AxiosErrorResponse>) => {
       if (error.response?.status === 401) {
         if (error.response.data?.code === "token.expired") {
           cookies = parseCookies(ctx);
@@ -31,22 +34,28 @@ export function setupAPIClient(
 
           if (!isRefreshing) {
             isRefreshing = true;
-            await api
+
+            api
               .post("/refresh-token", {
                 refreshToken,
               })
               .then((response) => {
-                const { token, refreshToken } = response.data;
+                const { token } = response.data;
 
                 setCookie(ctx, "store.token", token, {
                   maxAge: 60 * 60 * 24 * 30,
                   path: "/",
                 });
 
-                setCookie(ctx, "store.refreshToken", refreshToken, {
-                  maxAge: 60 * 60 * 24 * 30,
-                  path: "/",
-                });
+                setCookie(
+                  ctx,
+                  "store.refreshToken",
+                  response.data.refreshToken,
+                  {
+                    maxAge: 60 * 60 * 24 * 30,
+                    path: "/",
+                  }
+                );
 
                 api.defaults.headers["Authorization"] = `Bearer ${token}`;
 
@@ -86,6 +95,8 @@ export function setupAPIClient(
         } else {
           if (process.browser) {
             SignOut();
+          } else {
+            return Promise.reject(new AuthTokenError());
           }
         }
       }

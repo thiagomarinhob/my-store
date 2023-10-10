@@ -17,6 +17,7 @@ import { CreatePermissionsController } from "./modules/permissions/useCases/crea
 import { UpdateRolesController } from "./modules/roles/useCases/updateRoles/updateRolesController";
 import { FindByIdProductController } from "./modules/products/useCases/findByIdProducts/findByIdProductsController";
 import { DeleteProductsController } from "./modules/products/useCases/deleteProducts/deleteProductsController";
+import { UserActivedController } from "./modules/account/userActived/userActivedController";
 
 const routes = Router();
 
@@ -37,10 +38,13 @@ const createPermissionsController = new CreatePermissionsController();
 const updateRolesController = new UpdateRolesController();
 const findByIdProductController = new FindByIdProductController();
 const deleteProductsController = new DeleteProductsController();
+const userActivedController = new UserActivedController();
 
 routes.post("/authenticate", authenticateUserController.handle);
 
 routes.post("/refresh-token", refreshTokenController.handle);
+
+routes.get("/actived", ensureAuthenticateUser, userActivedController.handle);
 
 routes.post("/stores", createStoreController.handle);
 

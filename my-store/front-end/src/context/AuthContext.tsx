@@ -5,6 +5,7 @@ import Router from "next/router";
 
 type User = {
   username: string;
+  roles: string[];
 };
 
 type SignCredentials = {
@@ -38,8 +39,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const { "store.token": token } = parseCookies();
 
     if (token) {
-      // pegar dados de acesso do user
-      // logout automatico
+      api
+        .get("/actived")
+        .then((response) => {
+          const { username, roles } = response.data;
+          setUser({ username, roles });
+        })
+        .catch(() => {
+          SignOut();
+        });
     }
   }, []);
 
@@ -50,7 +58,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       });
 
-      const { token, refreshToken } = response.data;
+      const { token, refreshToken, roles } = response.data;
 
       setCookie(undefined, "store.token", token, {
         maxAge: 60 * 60 * 24 * 30,
@@ -62,9 +70,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
         path: "/",
       });
 
-      setUser({ username });
+      setUser({ username, roles });
 
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
+      Router.push("/");
     } catch (err) {
       console.log(err);
     }

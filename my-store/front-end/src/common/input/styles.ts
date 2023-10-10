@@ -88,11 +88,10 @@ export const Container = styled.div`
 `;
 
 interface IError {
-  error: boolean;
+  errorstate: boolean;
 }
 
 interface ILabel {
-  error: boolean;
   filled: string;
 }
 
@@ -102,14 +101,7 @@ export const Label = styled.div<ILabel>`
   height: 2.125rem;
   font-weight: 420;
   margin-bottom: 9px;
-  ${({ error, filled, theme }) =>
-    error
-      ? `color: #991b21;`
-      : `${
-          filled
-            ? `color: ${theme.colors.gray2};`
-            : `color: ${theme.colors.white};`
-        }`}
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 export const Error = styled.div<IError>`
@@ -120,5 +112,6 @@ export const Error = styled.div<IError>`
   padding: 0;
   font-weight: 420;
   justify-content: left;
-  ${({ error }: any) => (error ? "display: flex;" : "display: hidden;")}
+  ${({ errorstate }: any) =>
+    errorstate ? "display: flex;" : "display: hidden;"}
 `;

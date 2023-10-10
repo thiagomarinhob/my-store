@@ -22,14 +22,8 @@ const Sidebar = ({ active }: any) => {
     <Container sidebar={active}>
       <FaHome onClick={closeSidebar} />
       <Content>
-        <SidebarItem Icon={FaHome} link={"/products"} Text="Home" />
+        <SidebarItem Icon={FaHome} link={"/"} Text="Home" />
         <SidebarItem Icon={FaChartBar} link={"/products"} Text="Produtos" />
-        <SidebarItem Icon={FaUserAlt} link={"/"} Text="Users" />
-        <SidebarItem Icon={FaEnvelope} link={"/"} Text="Mail" />
-        <SidebarItem Icon={FaRegCalendarAlt} link={"/"} Text="Calendar" />
-        <SidebarItem Icon={FaIdCardAlt} link={"/"} Text="Employees" />
-        <SidebarItem Icon={FaRegFileAlt} link={"/"} Text="Reports" />
-        <SidebarItem Icon={FaRegSun} link={"/"} Text="Settings" />
       </Content>
     </Container>
   );

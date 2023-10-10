@@ -7,10 +7,10 @@ interface IContainer {
 export const Container = styled.div<IContainer>`
   position: relative;
   height: 100vh;
-  background-color: ${({ theme }) => theme.colors.grayPrimary};
+  background-color: ${({ theme }) => theme.colors.primary};
   /* top: 0px; */
   /* left: 0px; */
-  width: 250px;
+  width: 300px;
   /* left: ${({ sidebar }: any) => (sidebar ? "0" : "-100%")}; */
   animation: showSidebar 0.4s;
 

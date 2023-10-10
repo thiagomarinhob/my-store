@@ -12,22 +12,21 @@ import {
 } from "../../styles/pages/login";
 import Image from "next/image";
 import Logo from "@/assets/image.jpg";
-import { GetServerSideProps } from "next";
-import { parseCookies } from "nookies";
 import { withSSRGuest } from "@/utils/withSSRGuest";
+import { GetServerSidePropsContext } from "next";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isErrorEmail, setIsErrorEmail] = useState(false);
+  const [isErrorUsername, setIsErrorUsername] = useState(false);
   const [isErrorPassword, setIsErrorPassword] = useState(false);
   const { signIn } = useContext(AuthContext);
 
   const Router = useRouter();
 
   async function handleSunmit() {
-    await signIn({ email, password });
-    Router.push("/products");
+    await signIn({ username, password });
+    Router.push("/");
   }
 
   return (
@@ -40,17 +39,17 @@ export default function Login() {
 
         <Form>
           <Input
-            labelText="Email"
+            labelText="Username"
             InputType="text"
             disabled={false}
             isRequired
-            name="email"
-            onChange={setEmail}
-            placeholder="Digite seu email"
-            value={email}
+            name="Username"
+            onChange={setUsername}
+            placeholder="Digite seu Username"
+            value={username}
             mask=""
-            isErrorState={isErrorEmail}
-            setErrorState={setIsErrorEmail}
+            isErrorState={isErrorUsername}
+            setErrorState={setIsErrorUsername}
           />
 
           <Input
@@ -74,8 +73,10 @@ export default function Login() {
   );
 }
 
-export const getServerSideProps = withSSRGuest(async (ctx) => {
-  return {
-    props: {},
-  };
-});
+export const getServerSideProps = withSSRGuest(
+  async (ctx: GetServerSidePropsContext) => {
+    return {
+      props: {},
+    };
+  }
+);

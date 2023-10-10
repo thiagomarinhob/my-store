@@ -1,17 +1,19 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  width: 100%;
   table {
     width: 100%;
-    border-spacing: 0 5px;
-    border-radius: 0.25rem;
-    background-color: ${({ theme }) => theme.colors.gray};
+    border-spacing: 0 0;
+    border-radius: 0;
+    background-color: ${({ theme }) => theme.colors.primary};
+    border: 1px solid ${({ theme }) => theme.colors.primary};
   }
 
   th {
-    color: ${({ theme }) => theme.colors.black};
+    color: ${({ theme }) => theme.colors.white};
     font-weight: 700;
-    padding: 1rem 0.75rem;
+    padding: 16px 12px;
     text-align: center;
     line-height: 1.5rem;
   }
@@ -20,8 +22,8 @@ export const Container = styled.div`
     padding: 0.5rem 2rem;
     background: ${(props) => props.theme.colors.white};
     color: ${({ theme }) => theme.colors.black};
-    border: 1px solid ${({ theme }) => theme.colors.gray2};
-    border-radius: 0.25rem;
+    border-bottom: 1px solid ${({ theme }) => theme.colors.primary};
+    text-align: center;
   }
 `;
 

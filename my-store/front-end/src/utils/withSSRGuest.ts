@@ -12,7 +12,6 @@ export function withSSRGuest<P extends { [key: string]: any }>(
     ctx: GetServerSidePropsContext
   ): Promise<GetServerSidePropsResult<P>> => {
     const cookies = parseCookies(ctx);
-
     if (cookies["store.token"]) {
       return {
         redirect: {

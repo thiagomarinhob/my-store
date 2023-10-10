@@ -23,7 +23,7 @@ export const Content = styled.div`
 
   width: 45%;
   height: 100vh;
-  background-color: ${({ theme }) => theme.colors.bluePrimary};
+  background-color: ${({ theme }) => theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
 `;
 
@@ -43,7 +43,7 @@ export const Button = styled.button`
   font-weight: 420;
   height: 3.875rem;
   border-radius: 0.625rem;
-  background-color: ${({ theme }) => theme.colors.blueSecundary};
+  background-color: ${({ theme }) => theme.colors.secundary};
   color: ${({ theme }) => theme.colors.white};
 
   min-height: 3.3125rem;
@@ -52,7 +52,7 @@ export const Button = styled.button`
   outline: none;
   line-height: 2.125rem;
   text-align: center;
-  border: 0.0625rem solid ${({ theme }) => theme.colors.blueSecundary};
+  border: 0.0625rem solid ${({ theme }) => theme.colors.secundary};
 
   &:hover {
     filter: brightness(0.9);

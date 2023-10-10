@@ -5,7 +5,7 @@ export const Container = styled.div`
   justify-content: center;
   height: 5rem;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.bluePrimary};
+  background-color: ${({ theme }) => theme.colors.primary};
   box-shadow: 0 0 20px 3px;
 `;
 

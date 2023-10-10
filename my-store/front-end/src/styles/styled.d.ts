@@ -6,18 +6,11 @@ declare module "styled-components" {
 
     colors: {
       white: string;
-      red: string;
-      orange: string;
-      yellow: string;
-      green: string;
-      brown: string;
       black: string;
-      gray: string;
-      gray2: string;
-      grayPrimary: string;
-      graySecuundary: string;
-      bluePrimary: string;
-      blueSecundary: string;
+      primary: string;
+      secundary: string;
+      purple: string;
+      title: string;
     };
   }
 }
